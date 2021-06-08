@@ -12,9 +12,11 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 
 namespace Geosoft.MVVMLight.UI.ViewModel
 {
@@ -43,6 +45,7 @@ namespace Geosoft.MVVMLight.UI.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
         }
 
         public MainViewModel Main
@@ -53,6 +56,10 @@ namespace Geosoft.MVVMLight.UI.ViewModel
             }
         }
         
+        private void NotifyUserMethod(NotificationMessage message)
+        {
+            MessageBox.Show(message.Notification);
+        }
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
